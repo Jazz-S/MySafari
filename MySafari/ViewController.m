@@ -20,6 +20,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.activityIndicator.hidesWhenStopped = YES;
     
 }
 
@@ -30,14 +31,19 @@
         [self.webView goBack];
     }
 }
+
 - (IBAction)onForwardButtonPressed:(id)sender
 {
-    [self.webView goForward];
+    if (self.webView.canGoForward) {
+        [self.webView goForward];
+    }
 }
+
 - (IBAction)onStopLoadingButtonPressed:(id)sender
 {
     [self.webView stopLoading];
 }
+
 - (IBAction)onReloadButtonPressed:(id)sender
 {
     [self.webView reload];
@@ -45,10 +51,16 @@
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    NSURL *url = [NSURL URLWithString:textField.text];
+    
+    NSString *urlString = textField.text;
+    if (![@"http://" isEqualToString:[urlString substringToIndex:7]]) {
+        urlString = [@"http://" stringByAppendingString:urlString];
+    }
+    NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:request];
     
+    [textField resignFirstResponder];
     return YES;
 }
 
