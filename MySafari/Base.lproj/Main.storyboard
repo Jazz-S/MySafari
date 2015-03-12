@@ -82,6 +82,7 @@
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="bN4-fs-iJY" id="aou-IF-Tat"/>
+                        <outlet property="textField" destination="if2-UU-g35" id="cS9-ac-6gk"/>
                         <outlet property="urlTextField" destination="if2-UU-g35" id="idf-mo-3DH"/>
                         <outlet property="webView" destination="tpK-lL-MGM" id="Fvj-i8-9Pe"/>
                     </connections>

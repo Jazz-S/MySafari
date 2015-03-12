@@ -8,11 +8,13 @@
 
 #import "ViewController.h"
 
-@interface ViewController () <UIWebViewDelegate,UITextFieldDelegate>
+@interface ViewController () <UIWebViewDelegate,UITextFieldDelegate,UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (weak, nonatomic) IBOutlet UITextField *urlTextField;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (nonatomic) CGFloat lastContentOffsetY;
+@property (weak, nonatomic) IBOutlet UITextField *textField;
 
 @end
 
@@ -21,7 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.activityIndicator.hidesWhenStopped = YES;
-    
+    self.webView.scrollView.delegate = self;
 }
 
 - (IBAction)onBackButtonPressed:(id)sender
@@ -73,4 +75,23 @@
 {
     [self.activityIndicator stopAnimating];
 }
+
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    self.lastContentOffsetY = scrollView.contentOffset.y;
+    
+}
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (self.lastContentOffsetY < scrollView.contentOffset.y) {
+        self.textField.hidden = YES;
+    } else {
+        self.textField.hidden = NO;
+    }
+}
+
+
+
+
 @end
